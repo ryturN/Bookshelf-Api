@@ -23,7 +23,7 @@ This is a simple Node.js application for managing books. You can add, retrieve, 
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/book-management-app.git
+   git clone https://github.com/ryturn/Bookshelf-Api.git
 
     Install the dependencies:
 
