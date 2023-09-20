@@ -29,7 +29,7 @@ This is a simple Node.js application for managing books. You can add, retrieve, 
 
     bash
 
-cd book-management-app
+cd Bookshelf-Api
 npm install
 
 Start the application:
@@ -38,7 +38,7 @@ bash
 
     npm start
 
-    The application will be accessible at http://localhost:3000.
+    The application will be accessible at http://localhost:9000.
 
 Usage
 
