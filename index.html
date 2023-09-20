@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Buku</title>
+    <!-- Tambahkan link CSS Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <header class="bg-blue-500 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-semibold">Daftar Buku</h1>
+            <button id="openCreateBookForm" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Tambahkan Buku</button>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-6 mt-6">
+        <!-- Form pencarian buku -->
+        <form id="searchForm" class="mb-6">
+            <label for="search" class="block text-gray-700 font-semibold mb-2">Cari Buku:</label>
+            <div class="flex">
+                <input type="text" id="search" name="search" class="w-full px-3 py-2 border rounded-l">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600">Cari</button>
+            </div>
+        </form>
+
+        <!-- Form Tambah Buku (semula tersembunyi) -->
+        <form id="createBookForm" class="hidden mb-6">
+            <!-- Isi form tambah buku sesuai dengan kebutuhan -->
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Tambahkan</button>
+        </form>
+
+        <!-- Daftar Buku -->
+        <ul id="bookList" class="grid gap-4">
+            <!-- Daftar buku akan ditampilkan di sini -->
+        </ul>
+    </div>
+    <script>
+        const URL_API = 'http://localhost:9000'; // Ganti dengan URL server Anda
+
+        const addBookForm = document.getElementById('addBookForm');
+        const bookList = document.getElementById('bookList');
+
+        // Fungsi untuk menampilkan daftar buku
+        async function fetchBooks() {
+            try {
+                const response = await fetch(`${URL_API}/books`);
+                const data = await response.json();
+                if (data.status === 'success') {
+                    bookList.innerHTML = '';
+                    data.data.books.forEach(book => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<strong>${book.name}</strong> (${book.publisher})`;
+                        bookList.appendChild(li);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching books:', error);
+            }
+        }
+
+        // Fungsi untuk menambahkan buku
+        addBookForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(addBookForm);
+            const bookData = {};
+            formData.forEach((value, key) => {
+                bookData[key] = value;
+            });
+
+            try {
+                const response = await fetch(`${URL_API}/books`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(bookData),
+                });
+                const data = await response.json();
+                if (data.status === 'success') {
+                    alert('Buku berhasil ditambahkan');
+                    addBookForm.reset();
+                    fetchBooks();
+                } else {
+                    alert('Gagal menambahkan buku: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error adding book:', error);
+            }
+        });
+
+        // Muat daftar buku saat halaman dimuat
+        window.addEventListener('load', () => {
+            fetchBooks();
+        });
+
+        // Fungsi untuk menampilkan atau menyembunyikan form tambah buku
+        const openCreateBookFormButton = document.getElementById('openCreateBookForm');
+        const createBookForm = document.getElementById('createBookForm');
+
+        openCreateBookFormButton.addEventListener('click', () => {
+            createBookForm.classList.toggle('hidden');
+        });
+
+        // Fungsi untuk menampilkan daftar buku
+        async function fetchBooks() {
+            // Kode untuk mengambil daftar buku dari server (gunakan fetch)
+            // Lalu, tampilkan daftar buku dalam elemen #bookList
+        }
+
+        // Fungsi untuk melakukan pencarian buku
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('search');
+
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const searchTerm = searchInput.value;
+            // Kode untuk melakukan pencarian buku berdasarkan searchTerm (gunakan fetch)
+            // Tampilkan hasil pencarian dalam elemen #bookList
+        });
+
+        // Muat daftar buku saat halaman dimuat
+        window.addEventListener('load', () => {
+            fetchBooks();
+        });
+    </script>
+</body>
+</html>
