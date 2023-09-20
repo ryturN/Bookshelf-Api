@@ -8,8 +8,7 @@ This is a simple Node.js application for managing books. You can add, retrieve, 
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
-- [Contributing](#contributing)
-- [License](#license)
+
 
 ## Features
 
